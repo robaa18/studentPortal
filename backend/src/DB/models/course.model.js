@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+//i am the comment
 const courseSchema = new mongoose.Schema({
   title: {
     type: String,
