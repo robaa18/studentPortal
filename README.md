@@ -1,51 +1,50 @@
 #  Student Portal
 
-A full-stack **Student Portal** designed to simplify academic management for both students and administrators.
+A full-stack **Student Management Portal** built to provide students and administrators with a simple and organized platform for managing academic information.
 
-The system provides separate student and admin experiences for managing courses, grades, schedules, student information, and other academic operations.
+The system includes secure authentication, role-based access control, course registration, grades, schedules, student management, and academic data management.
 
 ---
 
 ##  Features
 
-###  Student Features
+###  Student
 
-- Secure student login
-- Student dashboard
-- View personal profile
+- Student authentication
+- Personal dashboard
+- View and manage profile
 - View academic schedule
 - View grades
-- Browse and register for courses
-- Access student-specific protected pages
+- Register for courses
+- Protected student routes
 
-###  Admin Features
+###  Admin
 
-- Admin login
+- Admin authentication
 - Admin dashboard
 - Manage students
 - Manage courses
-- Manage student grades
-- Monitor and manage academic information
-- Access admin-specific protected pages
+- Manage grades
+- Role-based protected routes
+
+###  Security
+
+- JWT authentication
+- Access & refresh tokens
+- Password hashing using bcrypt
+- Role-based authorization
+- Request validation
+- Protected frontend routes
 
 ---
 
 ##  Tech Stack
 
-### Backend
-
-![Java](https://img.shields.io/badge/Java-Backend-orange?logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-Backend-6DB33F?logo=springboot&logoColor=white)
-
-- Java
-- Spring Boot
-- RESTful APIs
-
 ### Frontend
 
-![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-Build%20Tool-646CFF?logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-Styling-06B6D4?logo=tailwindcss&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 
 - React
 - Vite
@@ -56,6 +55,29 @@ The system provides separate student and admin experiences for managing courses,
 - Zod
 - React Toastify
 
+### Backend
+
+![Node.js](https://img.shields.io/badge/Node.js-Backend-339933?logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-5-000000?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb&logoColor=white)
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcrypt
+- Joi
+- CORS
+
+### DevOps
+
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
+
+- Docker
+- Docker Compose
+- Nginx
+
 ---
 
 ##  Project Structure
@@ -64,25 +86,238 @@ The system provides separate student and admin experiences for managing courses,
 studentPortal/
 │
 ├── backend/
-│   └── Spring Boot Application
+│   ├── config/
+│   ├── scripts/
+│   ├── src/
+│   │   ├── DB/
+│   │   ├── middleware/
+│   │   ├── modules/
+│   │   │   ├── Auth/
+│   │   │   ├── Course/
+│   │   │   ├── User/
+│   │   │   ├── announcements/
+│   │   │   ├── grades/
+│   │   │   └── schedule/
+│   │   └── utils/
+│   ├── Dockerfile
+│   └── package.json
 │
 ├── frontend/
 │   ├── public/
-│   └── src/
-│       ├── assets/
-│       ├── components/
-│       ├── context/
-│       ├── layouts/
-│       ├── pages/
-│       ├── protectedRoutes/
-│       └── services/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── protectedRoutes/
+│   │   └── services/
+│   ├── Dockerfile
+│   └── package.json
 │
+├── docker-compose.yml
 └── README.md
 ```
 
 ---
 
-##  Main Pages
+##  API Modules
+
+The backend is organized into multiple modules:
+
+```text
+/api/auth
+/api/course
+/api/grades
+/api/schedule
+/api/user
+/api/announce
+```
+
+This modular structure keeps authentication, courses, grades, schedules, users, and announcements separated and maintainable.
+
+---
+
+#  Getting Started
+
+You can run the project either manually or using Docker.
+
+---
+
+## Option 1 — Run with Docker
+
+### Requirements
+
+- Docker
+- Docker Compose
+
+Clone the repository:
+
+```bash
+git clone https://github.com/robaa18/studentPortal.git
+```
+
+Enter the project directory:
+
+```bash
+cd studentPortal
+```
+
+Build and start the application:
+
+```bash
+docker compose up --build
+```
+
+The application will be available at:
+
+```text
+Frontend: http://localhost:5173
+Backend:  http://localhost:5000
+MongoDB:  mongodb://localhost:27017
+```
+
+To stop the containers:
+
+```bash
+docker compose down
+```
+
+---
+
+#  Option 2 — Run Manually
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/robaa18/studentPortal.git
+cd studentPortal
+```
+
+---
+
+## 2. Backend Setup
+
+Go to the backend:
+
+```bash
+cd backend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create your environment file:
+
+```bash
+cp .env.example .env
+```
+
+For Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Example environment variables:
+
+```env
+NODE_ENV=development
+PORT=5000
+
+MONGODB_URI=mongodb://localhost:27017/studentportal
+
+WHITE_LIST=http://localhost:5173,http://127.0.0.1:5173
+
+SALT=10
+
+TOKEN_ACCESS_USER_SECRET_KEY=your-user-access-secret
+TOKEN_REFRESH_USER_SECRET_KEY=your-user-refresh-secret
+
+TOKEN_ACCESS_ADMIN_SECRET_KEY=your-admin-access-secret
+TOKEN_REFRESH_ADMIN_SECRET_KEY=your-admin-refresh-secret
+
+ACCESS_EXPIRES=1d
+REFRESH_EXPIRES=7d
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Backend runs on:
+
+```text
+http://localhost:5000
+```
+
+---
+
+## 3. Frontend Setup
+
+Open another terminal:
+
+```bash
+cd frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create the frontend environment file:
+
+```bash
+cp .env.example .env
+```
+
+Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Environment:
+
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:5173
+```
+
+---
+
+##  Database Seed
+
+The backend includes a database seed script.
+
+Run:
+
+```bash
+cd backend
+npm run seed
+```
+
+---
+
+##  Application Routes
 
 ### Student
 
@@ -105,218 +340,70 @@ studentPortal/
 
 ---
 
-##  Getting Started
+##  Architecture
 
-### Prerequisites
-
-Make sure you have the following installed:
-
-- Java
-- Node.js
-- npm
-- Git
-
----
-
-## 1. Clone the Repository
-
-```bash
-git clone https://github.com/robaa18/studentPortal.git
-```
-
-Move into the project:
-
-```bash
-cd studentPortal
-```
-
----
-
-#  Backend Setup
-
-Navigate to the backend directory:
-
-```bash
-cd backend
-```
-
-Run the Spring Boot application using your IDE or Maven.
-
-If the project contains Maven Wrapper:
-
-### Windows
-
-```bash
-mvnw.cmd spring-boot:run
-```
-
-### Linux / macOS
-
-```bash
-./mvnw spring-boot:run
-```
-
-Or using Maven:
-
-```bash
-mvn spring-boot:run
-```
-
-The backend will typically run on:
+The backend follows a modular structure where each major feature is separated into its own module.
 
 ```text
-http://localhost:8080
+Request
+   ↓
+Route
+   ↓
+Middleware / Validation
+   ↓
+Controller / Service
+   ↓
+Mongoose
+   ↓
+MongoDB
 ```
 
-> The backend port may vary depending on the project configuration.
+The frontend uses reusable components, layouts, authentication context, services, and protected routes to separate application responsibilities.
 
 ---
 
-#  Frontend Setup
+## Authentication Flow
 
-Open another terminal and navigate to:
-
-```bash
-cd frontend
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-The frontend will typically run on:
-
-```text
-http://localhost:5173
-```
-
----
-
-##  Application Flow
-
-```text
-React Frontend
-      ↓
-    Axios
-      ↓
-RESTful API
-      ↓
-Spring Boot Backend
-      ↓
-Application Data
-```
-
-The frontend communicates with the Spring Boot backend through RESTful APIs.
-
----
-
-##  Frontend Architecture
-
-The frontend is organized into reusable and separated modules:
-
-```text
-src/
-│
-├── components/
-│   └── Reusable UI components
-│
-├── context/
-│   └── Application and authentication state
-│
-├── layouts/
-│   ├── Student Layout
-│   └── Admin Layout
-│
-├── pages/
-│   ├── student/
-│   └── admin/
-│
-├── protectedRoutes/
-│   └── Route protection
-│
-└── services/
-    └── API communication
-```
-
----
-
-##  Role-Based Access
-
-The application provides two main roles:
-
-### Student
-
-Students can access academic information related to their accounts.
-
-### Admin
-
-Administrators can manage students, courses, grades, and other academic data.
-
-Protected routes ensure that each role can only access its authorized pages.
-
----
-
-##  Academic Management
-
-The portal provides functionality for managing:
+The application supports authentication for both:
 
 - Students
-- Courses
-- Course registration
-- Grades
-- Academic schedules
-- Student profiles
+- Administrators
+
+Protected routes prevent unauthorized users from accessing pages that do not belong to their role.
 
 ---
 
 ##  Screenshots
 
-### Login Page
+Screenshots of the project can be added here.
 
-<!-- Add screenshot here -->
+### Login
+
+<!-- Add login screenshot -->
 
 ### Student Dashboard
 
-<!-- Add screenshot here -->
-
-### Student Grades
-
-<!-- Add screenshot here -->
-
-### Course Registration
-
-<!-- Add screenshot here -->
+<!-- Add student dashboard screenshot -->
 
 ### Admin Dashboard
 
-<!-- Add screenshot here -->
+<!-- Add admin dashboard screenshot -->
 
 ---
 
 ##  Project Purpose
 
-This project was developed as an academic software project to apply full-stack development concepts in a practical application.
+This project was created as a practical full-stack application to apply concepts including:
 
-The project provided practical experience with:
-
-- Building RESTful APIs
-- Frontend and backend integration
-- Java and Spring Boot backend development
-- React frontend development
-- Role-based application design
-- Routing and protected pages
-- API communication
-- Form handling and validation
-- Team collaboration
-- Git and GitHub
+- REST API development
+- Authentication & authorization
+- Database modeling
+- Frontend/backend integration
+- Role-based access control
+- Form validation
+- Modular backend architecture
+- Docker containerization
+- Team-based software development
 
 ---
 
@@ -324,7 +411,7 @@ The project provided practical experience with:
 
 **Robaa Ahmed**
 
-Junior Backend Developer
+Backend / Full-Stack Developer
 
 GitHub: [@robaa18](https://github.com/robaa18)
 
@@ -332,4 +419,4 @@ GitHub: [@robaa18](https://github.com/robaa18)
 
 ##  License
 
-This project was developed for educational and portfolio purposes.
+This project is intended for educational and portfolio purposes.
